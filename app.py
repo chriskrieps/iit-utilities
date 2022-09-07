@@ -7,10 +7,10 @@ def main():
     wb = load_workbook(filename = '.\Data\OG Meter Data Summary.xlsx')
 
     # Save this to a new file so that we leave the OG data intact
-    wb.save('.\Data\Updated Meter Data Summary.xlsx')
+    wb.save('Updated Meter Data Summary.xlsx')
 
     # Reassign wb to the new updated meter data
-    wb = load_workbook(filename = '.\Data\Updated Meter Data Summary.xlsx')
+    wb = load_workbook(filename = 'Updated Meter Data Summary.xlsx')
 
     # Iterate through each worksheet (ws) in the workbook (wb)
     for ws in wb:
@@ -23,16 +23,20 @@ def main():
         # Confirm that the B column is the DATE column. If not then skip this sheet.
         if ws['B1'].value == "DATE":
 
+            # Set a count variable to maintain row location as rows are deleted
+            count = 1
+
             # Iterate through all of the cells in column B
             for i, cell in enumerate(ws['B']):
 
                 # Remove any rows that do not have a value in the DATE column
                 if cell.value == None:
                     print("Row "+str(i)+" deleted.")
-                    ws.delete_rows(i+1, 1)
+                    ws.delete_rows(i+count, 1)
+                    count-=1
 
             # Save any changes made to this column
-            wb.save('.\Data\Updated Meter Data Summary.xlsx')
+            # wb.save('Updated Meter Data Summary.xlsx')
         else:
             print("Date column FAILED")
             continue
@@ -40,16 +44,20 @@ def main():
         # Confirm that the C column is the METER READING column. If not then skip this sheet.
         if ws["C1"].value == "METER READING":
 
+            # Set a count variable to maintain row location as rows are deleted
+            count = 1
+
             # Iterate through all of the cells in column C
             for i, cell in enumerate(ws['C']):
 
                 # Remove any rows that do not have a value in the METER READING column
                 if cell.value == None or cell.value == "Missing":
                     print("Row "+str(i)+" deleted.")
-                    ws.delete_rows(i+1, 1)
+                    ws.delete_rows(i+count, 1)
+                    count-=1
 
             # Save any changes made to this column
-            wb.save('.\Data\Updated Meter Data Summary.xlsx')
+            # wb.save('Updated Meter Data Summary.xlsx')
 
         else:
             print("Meter reading column FAILED")
@@ -57,17 +65,21 @@ def main():
 
         # Confirm that the D column is the CONSUMPTION column. If not then skip this sheet.
         if ws["D1"].value == "CONSUMPTION":
+            
+            # Set a count variable to maintain row location as rows are deleted
+            count = 1
 
             # Iterate through all of the cells in column D
-            for i, cell in enumerate(ws['C']):
+            for i, cell in enumerate(ws['D']):
 
                 # Remove any rows that do not have a value in the CONSUMPTION column
                 if cell.value == None or cell.value == "Missing":
                     print("Row "+str(i)+" deleted.")
-                    ws.delete_rows(i+1, 1)
+                    ws.delete_rows(i+count, 1)
+                    count-=1
 
             # Save any changes made to this column
-            wb.save('.\Data\Updated Meter Data Summary.xlsx')
+            # wb.save('Updated Meter Data Summary.xlsx')
 
         else:
             print("Consumption column FAILED")
@@ -76,7 +88,7 @@ def main():
         print('----------')
 
     # One last save
-    wb.save('.\Data\Updated Meter Data Summary.xlsx')
+    wb.save('Updated Meter Data Summary.xlsx')
 
     """ ws = wb['TN Elec']
 
